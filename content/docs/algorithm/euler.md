@@ -1176,3 +1176,48 @@ int main() {
     return 0;
 }
 ```
+
+
+## 24. Lexicographic permutations {#24-dot-lexicographic-permutations}
+
+> A permutation is an ordered arrangement of objects. For example, 3124 is one possible permutation of the digits 1, 2, 3 and 4. If all of the permutations are listed numerically or alphabetically, we call it lexicographic order. The lexicographic permutations of 0, 1 and 2 are:
+>
+> <style>.org-center { margin-left: auto; margin-right: auto; text-align: center; }</style>
+>
+> <div class="org-center">
+>
+> 012   021   102   120   201   210
+>
+> </div>
+>
+> What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?
+
+```C++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int factorial(int num) {
+    if (num == 0)
+        return 1;
+    else
+        return num * factorial(num - 1);
+}
+
+int main() {
+    int n = 1000000 - 1;
+    long long ans = 0;
+    vector<int> nums{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    // 确定结果的每一位
+    for (int i = 0; i <= 9; i++) {
+        int fact = factorial(9 - i);
+        int idx = n / fact;
+        ans = ans * 10 + nums[idx];
+        nums.erase(nums.begin() + idx);
+        n -= (n / factorial(9 - i)) * factorial(9 - i);
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
