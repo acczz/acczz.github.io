@@ -491,3 +491,688 @@ int main() {
     return 0;
 }
 ```
+
+
+## 13. Large Sum {#13-dot-large-sum}
+
+> Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+>
+> <style>.org-center { margin-left: auto; margin-right: auto; text-align: center; }</style>
+>
+> <div class="org-center">
+>
+> 37107287533902102798797998220837590246510135740250
+> 46376937677490009712648124896970078050417018260538
+> 74324986199524741059474233309513058123726617309629
+> 91942213363574161572522430563301811072406154908250
+> 23067588207539346171171980310421047513778063246676
+> 89261670696623633820136378418383684178734361726757
+> 28112879812849979408065481931592621691275889832738
+> 44274228917432520321923589422876796487670272189318
+> 47451445736001306439091167216856844588711603153276
+> 70386486105843025439939619828917593665686757934951
+> 62176457141856560629502157223196586755079324193331
+> 64906352462741904929101432445813822663347944758178
+> 92575867718337217661963751590579239728245598838407
+> 58203565325359399008402633568948830189458628227828
+> 80181199384826282014278194139940567587151170094390
+> 35398664372827112653829987240784473053190104293586
+> 86515506006295864861532075273371959191420517255829
+> 71693888707715466499115593487603532921714970056938
+> 54370070576826684624621495650076471787294438377604
+> 53282654108756828443191190634694037855217779295145
+> 36123272525000296071075082563815656710885258350721
+> 45876576172410976447339110607218265236877223636045
+> 17423706905851860660448207621209813287860733969412
+> 81142660418086830619328460811191061556940512689692
+> 51934325451728388641918047049293215058642563049483
+> 62467221648435076201727918039944693004732956340691
+> 15732444386908125794514089057706229429197107928209
+> 55037687525678773091862540744969844508330393682126
+> 18336384825330154686196124348767681297534375946515
+> 80386287592878490201521685554828717201219257766954
+> 78182833757993103614740356856449095527097864797581
+> 16726320100436897842553539920931837441497806860984
+> 48403098129077791799088218795327364475675590848030
+> 87086987551392711854517078544161852424320693150332
+> 59959406895756536782107074926966537676326235447210
+> 69793950679652694742597709739166693763042633987085
+> 41052684708299085211399427365734116182760315001271
+> 65378607361501080857009149939512557028198746004375
+> 35829035317434717326932123578154982629742552737307
+> 94953759765105305946966067683156574377167401875275
+> 88902802571733229619176668713819931811048770190271
+> 25267680276078003013678680992525463401061632866526
+> 36270218540497705585629946580636237993140746255962
+> 24074486908231174977792365466257246923322810917141
+> 91430288197103288597806669760892938638285025333403
+> 34413065578016127815921815005561868836468420090470
+> 23053081172816430487623791969842487255036638784583
+> 11487696932154902810424020138335124462181441773470
+> 63783299490636259666498587618221225225512486764533
+> 67720186971698544312419572409913959008952310058822
+> 95548255300263520781532296796249481641953868218774
+> 76085327132285723110424803456124867697064507995236
+> 37774242535411291684276865538926205024910326572967
+> 23701913275725675285653248258265463092207058596522
+> 29798860272258331913126375147341994889534765745501
+> 18495701454879288984856827726077713721403798879715
+> 38298203783031473527721580348144513491373226651381
+> 34829543829199918180278916522431027392251122869539
+> 40957953066405232632538044100059654939159879593635
+> 29746152185502371307642255121183693803580388584903
+> 41698116222072977186158236678424689157993532961922
+> 62467957194401269043877107275048102390895523597457
+> 23189706772547915061505504953922979530901129967519
+> 86188088225875314529584099251203829009407770775672
+> 11306739708304724483816533873502340845647058077308
+> 82959174767140363198008187129011875491310547126581
+> 97623331044818386269515456334926366572897563400500
+> 42846280183517070527831839425882145521227251250327
+> 55121603546981200581762165212827652751691296897789
+> 32238195734329339946437501907836945765883352399886
+> 75506164965184775180738168837861091527357929701337
+> 62177842752192623401942399639168044983993173312731
+> 32924185707147349566916674687634660915035914677504
+> 99518671430235219628894890102423325116913619626622
+> 73267460800591547471830798392868535206946944540724
+> 76841822524674417161514036427982273348055556214818
+> 97142617910342598647204516893989422179826088076852
+> 87783646182799346313767754307809363333018982642090
+> 10848802521674670883215120185883543223812876952786
+> 71329612474782464538636993009049310363619763878039
+> 62184073572399794223406235393808339651327408011116
+> 66627891981488087797941876876144230030984490851411
+> 60661826293682836764744779239180335110989069790714
+> 85786944089552990653640447425576083659976645795096
+> 66024396409905389607120198219976047599490197230297
+> 64913982680032973156037120041377903785566085089252
+> 16730939319872750275468906903707539413042652315011
+> 94809377245048795150954100921645863754710598436791
+> 78639167021187492431995700641917969777599028300699
+> 15368713711936614952811305876380278410754449733078
+> 40789923115535562561142322423255033685442488917353
+> 44889911501440648020369068063960672322193204149535
+> 41503128880339536053299340368006977710650566631954
+> 81234880673210146739058568557934581403627822703280
+> 82616570773948327592232845941706525094512325230608
+> 22918802058777319719839450180888072429661980811197
+> 77158542502016545090413245809786882778948721859617
+> 72107838435069186155435662884062257473692284509516
+> 20849603980134001723930671666823555245252804609722
+> 53503534226472524250874054075591789781264330331690
+>
+> </div>
+
+```C++
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+std::string addTwoString(const std::string a, const std::string b) {
+    std::string ans;
+    int n = a.size() - 1, m = b.size() - 1;
+    int carry = 0;
+    while (n >= 0 && m >= 0) {
+        int t = a[n] - '0' + b[m] - '0' + carry;
+        ans.push_back(t % 10 + '0');
+        carry = t / 10;
+        n--, m--;
+    }
+    while (n >= 0) {
+        int t = a[n] - '0' + carry;
+        ans.push_back(t % 10 + '0');
+        carry = t / 10;
+        n--;
+    }
+    while (m >= 0) {
+        int t = b[m] - '0' + carry;
+        ans.push_back(t % 10 + '0');
+        carry = t / 10;
+        m--;
+    }
+    if (carry) {
+        ans.push_back(carry + '0');
+    }
+    std::reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+int main() {
+    std::vector<std::string> s = {"37107287533902102798797998220837590246510135740250", "46376937677490009712648124896970078050417018260538", "74324986199524741059474233309513058123726617309629", "91942213363574161572522430563301811072406154908250", "23067588207539346171171980310421047513778063246676", "89261670696623633820136378418383684178734361726757", "28112879812849979408065481931592621691275889832738", "44274228917432520321923589422876796487670272189318", "47451445736001306439091167216856844588711603153276", "70386486105843025439939619828917593665686757934951", "62176457141856560629502157223196586755079324193331", "64906352462741904929101432445813822663347944758178", "92575867718337217661963751590579239728245598838407", "58203565325359399008402633568948830189458628227828", "80181199384826282014278194139940567587151170094390", "35398664372827112653829987240784473053190104293586", "86515506006295864861532075273371959191420517255829", "71693888707715466499115593487603532921714970056938", "54370070576826684624621495650076471787294438377604", "53282654108756828443191190634694037855217779295145", "36123272525000296071075082563815656710885258350721", "45876576172410976447339110607218265236877223636045", "17423706905851860660448207621209813287860733969412", "81142660418086830619328460811191061556940512689692", "51934325451728388641918047049293215058642563049483", "62467221648435076201727918039944693004732956340691", "15732444386908125794514089057706229429197107928209", "55037687525678773091862540744969844508330393682126", "18336384825330154686196124348767681297534375946515", "80386287592878490201521685554828717201219257766954", "78182833757993103614740356856449095527097864797581", "16726320100436897842553539920931837441497806860984", "48403098129077791799088218795327364475675590848030", "87086987551392711854517078544161852424320693150332", "59959406895756536782107074926966537676326235447210", "69793950679652694742597709739166693763042633987085", "41052684708299085211399427365734116182760315001271", "65378607361501080857009149939512557028198746004375", "35829035317434717326932123578154982629742552737307", "94953759765105305946966067683156574377167401875275", "88902802571733229619176668713819931811048770190271", "25267680276078003013678680992525463401061632866526", "36270218540497705585629946580636237993140746255962", "24074486908231174977792365466257246923322810917141", "91430288197103288597806669760892938638285025333403", "34413065578016127815921815005561868836468420090470", "23053081172816430487623791969842487255036638784583", "11487696932154902810424020138335124462181441773470", "63783299490636259666498587618221225225512486764533", "67720186971698544312419572409913959008952310058822", "95548255300263520781532296796249481641953868218774", "76085327132285723110424803456124867697064507995236", "37774242535411291684276865538926205024910326572967", "23701913275725675285653248258265463092207058596522", "29798860272258331913126375147341994889534765745501", "18495701454879288984856827726077713721403798879715", "38298203783031473527721580348144513491373226651381", "34829543829199918180278916522431027392251122869539", "40957953066405232632538044100059654939159879593635", "29746152185502371307642255121183693803580388584903", "41698116222072977186158236678424689157993532961922", "62467957194401269043877107275048102390895523597457", "23189706772547915061505504953922979530901129967519", "86188088225875314529584099251203829009407770775672", "11306739708304724483816533873502340845647058077308", "82959174767140363198008187129011875491310547126581", "97623331044818386269515456334926366572897563400500", "42846280183517070527831839425882145521227251250327", "55121603546981200581762165212827652751691296897789", "32238195734329339946437501907836945765883352399886", "75506164965184775180738168837861091527357929701337", "62177842752192623401942399639168044983993173312731", "32924185707147349566916674687634660915035914677504", "99518671430235219628894890102423325116913619626622", "73267460800591547471830798392868535206946944540724", "76841822524674417161514036427982273348055556214818", "97142617910342598647204516893989422179826088076852", "87783646182799346313767754307809363333018982642090", "10848802521674670883215120185883543223812876952786", "71329612474782464538636993009049310363619763878039", "62184073572399794223406235393808339651327408011116", "66627891981488087797941876876144230030984490851411", "60661826293682836764744779239180335110989069790714", "85786944089552990653640447425576083659976645795096", "66024396409905389607120198219976047599490197230297", "64913982680032973156037120041377903785566085089252", "16730939319872750275468906903707539413042652315011", "94809377245048795150954100921645863754710598436791", "78639167021187492431995700641917969777599028300699", "15368713711936614952811305876380278410754449733078", "40789923115535562561142322423255033685442488917353", "44889911501440648020369068063960672322193204149535", "41503128880339536053299340368006977710650566631954", "81234880673210146739058568557934581403627822703280", "82616570773948327592232845941706525094512325230608", "22918802058777319719839450180888072429661980811197", "77158542502016545090413245809786882778948721859617", "72107838435069186155435662884062257473692284509516", "20849603980134001723930671666823555245252804609722", "53503534226472524250874054075591789781264330331690"};
+    std::string ans;
+    for (int i = 0; i < s.size(); i++) {
+        ans = addTwoString(ans, s[i]);
+    }
+    std::cout << ans.substr(0, 10) << std::endl;
+    return 0;
+}
+```
+
+
+## 14. Longest Collatz Sequence {#14-dot-longest-collatz-sequence}
+
+> The following iterative sequence is defined for the set of positive integers:<br />
+> \\(n \rightarrow n/2\\) (\\(n\\) is even)<br />
+> \\(n \rightarrow 3n+1\\) (\\(n\\) is odd)<br />
+> Using the rule above and starting with 13, we generate the following sequence:
+> \\[13 \rightarrow 40 \rightarrow 20 \rightarrow 10 \rightarrow 5 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1\\]
+> It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.<br />
+> Which starting number, under one million, produces the longest chain?<br />
+> **NOTE:** Once the chain starts the terms are allowed to go above one million.
+
+```C++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    int n = 1e6, i = 1, maxLen = 0, ans;
+    std::vector<int> d(n + 1, -1);
+    while (i <= n) {
+        long long x = i;
+        int cnt = 1;
+        while (x != 1) {
+            if (x < i) {
+                cnt += d[x];
+                break;
+            }
+            if (x % 2 == 0) {
+                x = x / 2;
+                cnt++;
+            } else if (x % 2 == 1) {
+                x = 3 * x + 1;
+                cnt++;
+            }
+        }
+        if (cnt > maxLen) {
+            maxLen = cnt;
+            ans = i;
+        }
+        d[i] = cnt;
+        i++;
+    }
+    std::cout << ans << std::endl;
+    return 0;
+}
+```
+
+
+## 15. Lattice paths {#15-dot-lattice-paths}
+
+> Starting in the top left corner of a 2×2 grid, and only being able to move to the right and down, there are exactly 6 routes to the bottom right corner.<br />
+> ![](/images/0015.png)<br />
+> How many such routes are there through a 20×20 grid?
+
+```C++
+#include <iostream>
+#include <vector>
+
+int main() {
+    int n = 20;
+    std::vector<std::vector<long long>> dp(n + 1, std::vector<long long>(n + 1));
+    for (int i = 0; i <= n; i++) {
+        dp[i][0] = dp[0][i] = 1;
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+        }
+    }
+    std::cout << dp[n][n] << std::endl;
+    return 0;
+};
+```
+
+
+## 16. Power digit sum {#16-dot-power-digit-sum}
+
+> \\(2^15=32768\\) and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.<br />
+> What is the sum of the digits of the number \\(2^1000\\)?
+
+```C++
+#include <iostream>
+#include <string>
+#include <vector>
+
+std::string times(const std::string a, const std::string b) {
+    std::string ans;
+    int m = a.size(), n = b.size();
+    std::vector<int> res(m + n);
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            res[i + j + 1] += (a[i] - '0') * (b[j] - '0');
+        }
+    }
+    for (int i = m + n - 1; i > 0; i--) {
+        res[i - 1] += res[i] / 10;
+        res[i] %= 10;
+    }
+    for (int i = res[0] ? 0 : 1; i < m + n; i++) {
+        ans += res[i] + '0';
+    }
+    return ans;
+}
+
+int main() {
+    std::string res = "1";
+    int ans = 0;
+    int n = 1000;
+    for (int i = 1; i <= n; i++) {
+        res = times(res, "2");
+    }
+    for (char c : res) {
+        ans += c - '0';
+    }
+    std::cout << ans << std::endl;
+    return 0;
+};
+```
+
+
+## 17. Number Letter Counts {#17-dot-number-letter-counts}
+
+> If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.<br />
+> If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?<br />
+> **NOTE:** Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters. The use of "and" when writing out numbers is in compliance with British usage.
+
+```C++
+#include <iostream>
+#include <unordered_map>
+
+std::unordered_map<int, std::string> mp = { {0, ""}, {1, "one"}, {2, "two"}, {3, "three"}, {4, "four"}, {5, "five"}, {6, "six"}, {7, "seven"}, {8, "eight"}, {9, "nine"}, {10, "ten"}, {11, "eleven"}, {12, "twelve"}, {13, "thirteen"}, {14, "fourteen"}, {15, "fifteen"}, {16, "sixteen"}, {17, "seventeen"}, {18, "eighteen"}, {19, "nineteen"}, {20, "twenty"}, {30, "thirty"}, {40, "forty"}, {50, "fifty"}, {60, "sixty"}, {70, "seventy"}, {80, "eighty"}, {90, "ninety"}, {100, "hundred"}, {1000, "thousand"} };
+
+int main() {
+    int ans = 0, n = 1000;
+    for (int i = 1; i <= n; i++) {
+        int x = i, flag = 0;
+        std::string tmp;
+        if (x / 1000) {
+            tmp += mp[x / 1000] + mp[1000];
+            x = x % 1000;
+        }
+        if (x / 100) {
+            tmp += mp[x / 100] + mp[100];
+            x = x % 100;
+            if (x > 0) {
+                flag = 1;
+            }
+        }
+        if (x / 10 > 1) {
+            if (flag == 1) {
+                tmp += "and";
+            }
+            tmp += mp[x / 10 * 10] + mp[x % 10];
+        }
+        else {
+            if (flag == 1) {
+                tmp += "and";
+            }
+            tmp += mp[x];
+        }
+        ans += tmp.size();
+    }
+    std::cout << ans << std::endl;
+    return 0;
+}
+```
+
+
+## 18. Maximum Path Sum I {#18-dot-maximum-path-sum-i}
+
+> By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.<br />
+>
+> <style>.org-center { margin-left: auto; margin-right: auto; text-align: center; }</style>
+>
+> <div class="org-center">
+>
+> <font color="#FF0000">3</font><br />
+> <font color="#FF0000">7</font>&emsp;4<br />
+> 2&emsp;<font color="#FF0000">4</font>&emsp;6<br />
+> 8&emsp;5&emsp;<font color="#FF0000">9</font>&emsp;3<br />
+>
+> </div>
+>
+> That is, 3 + 7 + 4 + 9 = 23.<br />
+> Find the maximum total from top to bottom of the triangle below:<br />
+>
+> <style>.org-center { margin-left: auto; margin-right: auto; text-align: center; }</style>
+>
+> <div class="org-center">
+>
+> 75<br />
+> 95&emsp;64<br />
+> 17&emsp;47&emsp;82<br />
+> 18&emsp;35&emsp;87&emsp;10<br />
+> 20&emsp;04&emsp;82&emsp;47&emsp;65<br />
+> 19&emsp;01&emsp;23&emsp;75&emsp;03&emsp;34<br />
+> 88&emsp;02&emsp;77&emsp;73&emsp;07&emsp;63&emsp;67<br />
+> 99&emsp;65&emsp;04&emsp;28&emsp;06&emsp;16&emsp;70&emsp;92<br />
+> 41&emsp;41&emsp;26&emsp;56&emsp;83&emsp;40&emsp;80&emsp;70&emsp;33<br />
+> 41&emsp;48&emsp;72&emsp;33&emsp;47&emsp;32&emsp;37&emsp;16&emsp;94&emsp;29<br />
+> 53&emsp;71&emsp;44&emsp;65&emsp;25&emsp;43&emsp;91&emsp;52&emsp;97&emsp;51&emsp;14<br />
+> 70&emsp;11&emsp;33&emsp;28&emsp;77&emsp;73&emsp;17&emsp;78&emsp;39&emsp;68&emsp;17&emsp;57<br />
+> 91&emsp;71&emsp;52&emsp;38&emsp;17&emsp;14&emsp;91&emsp;43&emsp;58&emsp;50&emsp;27&emsp;29&emsp;48<br />
+> 63&emsp;66&emsp;04&emsp;68&emsp;89&emsp;53&emsp;67&emsp;30&emsp;73&emsp;16&emsp;69&emsp;87&emsp;40&emsp;31<br />
+> 04&emsp;62&emsp;98&emsp;27&emsp;23&emsp;09&emsp;70&emsp;98&emsp;73&emsp;93&emsp;38&emsp;53&emsp;60&emsp;04&emsp;23<br />
+>
+> </div>
+>
+> **NOTE:** As there are only 16384 routes, it is possible to solve this problem by trying every route. However, Problem 67, is the same challenge with a triangle containing one-hundred rows; it cannot be solved by brute force, and requires a clever method! ;o)
+
+```C++
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+int main() {
+    std::vector<std::vector<int>> list;
+    int t, cnt = 0, count = 1;
+    std::vector<int> tmp;
+    while (std::cin >> t) {
+        tmp.push_back(t);
+        cnt++;
+        if (cnt == count) {
+            count++;
+            list.push_back(tmp);
+            tmp.clear();
+            cnt = 0;
+        }
+    }
+    int n = list.size();
+    std::vector<int> dp(n, 0);
+    dp[0] = list[0][0];
+    for (int i = 1; i < n; i++) {
+        for (int j = i; j >= 0; j--) {
+            dp[j] = std::max(dp[j] + list[i][j], dp[j - 1] + list[i][j]);
+        }
+    }
+    std::cout << *std::max_element(dp.begin(), dp.end()) << std::endl;
+    return 0;
+}
+```
+
+
+## 19. Counting Sundays {#19-dot-counting-sundays}
+
+> You are given the following information, but you may prefer to do some research for yourself.
+>
+> -   1 Jan 1900 was a Monday.
+> -   Thirty days has September, April, June and November. All the rest have thirty-one, Saving February alone, Which has twenty-eight, rain or shine. And on leap years, twenty-nine.
+> -   A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
+>
+> How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+
+\\[w=\left(y+\left[\frac{y}{4}\right]+\left[\frac{c}{4}\right]-2c+2m+\left[\frac{3(m+1)}{5}+d+1\right]\right)\mod7\\]
+or
+\\[w=\left(y+\left[\frac{y}{4}\right]+\left[\frac{c}{4}\right]-2c+\left[\frac{26(m+1)}{10}+d-1\right]\right)\mod7\\]
+
+-   \\(w\\) : 表示星期
+-   \\(c\\) : 年份前两位数
+-   \\(y\\) : 年份后两位数
+-   \\(m\\) : 月（\\(m\\)的取值范围为3至14，一年中的1、2月要看作上一年的13、14月来计算，即年份也要减一）
+-   \\(d\\) : 日
+-   \\([\quad]\\) : 向下取整
+
+<!--listend-->
+
+```C++
+#include <iostream>
+
+int zeller(int year, int month, int day) {
+    if (month == 1 || month == 2) {
+        month += 12;
+        year -= 1;
+    }
+    int c = year / 100;
+    int y = year % 100;
+    int m = month;
+    int d = day;
+    int w = y + y / 4 + c / 4 - 2 * c + 26 * (m + 1) / 10 + d - 1;
+    if (w < 0) {
+        return (w + ((-w) / 7 + 1) * 7) % 7;
+    }
+    return w % 7;
+}
+
+int main() {
+    int cnt = 0;
+    for (int y = 1901; y <= 2000; y++) {
+        for (int m = 1; m <= 12; m++) {
+            if (zeller(y, m, 1) == 0) cnt++;
+        }
+    }
+    std::cout << cnt << std::endl;
+    return 0;
+}
+```
+
+
+## 20. Factorial Digit Sum {#20-dot-factorial-digit-sum}
+
+> \\(n!\\) means \\(n\times(n-1)\times\dots\times3\times2\times1\\).<br />
+> For example, \\(10!=10\times9\times\dots\times3\times2\times1=3628800\\), and the sum of the digits in the number \\(10!\\) is \\(3+6+2+8+8+0+0=27\\).<br />
+> Find the sum of the digits in the number \\(100!\\).
+
+```C++
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+string multiply(string a, string b) {
+    string ans;
+    int n = a.size(), m = b.size();
+    vector<int> tmp(n + m);
+    for (int i = n - 1; i >= 0; i--) {
+        for (int j = m - 1; j >= 0; j--) {
+            tmp[i + j + 1] += (a[i] - '0') * (b[j] - '0');
+        }
+    }
+    for (int i = n + m - 1; i >= 1; i--) {
+        ans += tmp[i] % 10 + '0';
+        tmp[i - 1] += tmp[i] / 10;
+    }
+    ans += tmp[0] == 0 ? "" : to_string(tmp[0]);
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+int main() {
+    int n = 100, ans = 0;
+    string a = "1";
+    for (int i = 2; i <= n; i++) {
+        a = multiply(a, to_string(i));
+    }
+    for (int i = 0; i < a.size(); i++) {
+        ans += a[i] - '0';
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+
+
+## 21. Amicable Numbers {#21-dot-amicable-numbers}
+
+> Let \\(d(n)\\) be defined as the sum of proper divisors of \\(n\\) (numbers less than \\(n\\) which divide evenly into \\(n\\)).<br />
+> If \\(d(a)=b\\) and \\(d(b)=a\\), where \\(a\neq b\\), then \\(a\\) and \\(b\\) are an amicable pair and each of \\(a\\) and \\(b\\) are called amicable numbers.<br />
+> For example, the proper divisors of \\(220\\) are \\(1, 2, 4, 5, 10, 11, 20, 22, 44, 55\\) and \\(110\\); therefore \\(d(220)=284\\). The proper divisors of \\(284\\) are \\(1, 2, 4, 71\\) and \\(142\\); so \\(d(284)=220\\).<br />
+> Evaluate the sum of all the amicable numbers under \\(10000\\).
+
+```C++
+#include <iostream>
+#include <vector>
+#include <numeric>
+
+using namespace std;
+
+int getSumDivisors(int a) {
+    if (a == 1) return 0;
+    vector<int> t(1, 1);
+    for (int i = 2; i * i <= a; i++) {
+        if (a % i == 0) {
+            if (a / i != i) {
+                t.push_back(i);
+                t.push_back(a / i);
+            }
+            else {
+                t.push_back(i);
+            }
+        }
+    }
+    return accumulate(t.begin(), t.end(), 0);
+}
+
+int main() {
+    int ans = 0;
+    for (int i = 2; i < 10000; i++) {
+        if (getSumDivisors(i) != i && getSumDivisors(getSumDivisors(i)) == i) {
+            ans += i;
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+
+设 \\(\sigma(n)\\) 表示数 \\(n\\) 所有因子和，即 \\(\sigma(n)=\sum\_{d|n}d\\) ，其中 \\(d|n\\) 表示 \\(d\\) 是 \\(n\\) 的因子。则已知对于一个质数 \\(p\\) ，其因子只有一和自身，则 \\(\sigma(p)=p+1\\) ，而对于质数 \\(p\\) 的 \\(a\\) 次方，其因子为：
+\\[1,p,p^2,p^3\cdots p^a\\]
+则 \\(\sigma(p^a)=1+p+p^2+p^3+\cdots +p^a\\) ，显然为一个等比数列，则根据等比数列公式
+\\[\sigma(p^a)=\frac{p^{a+1}-1}{p-1}\\]
+现在对于任何质数，我们可以求其真因子之和。对于合数可对其进行质因数分解
+\\[c=p\_1^{e\_1}p\_2^{e\_2}\cdots p\_a^{e\_a}\\]
+从上式易知，任意合数 \\(c\\) 可将其分解为两个互素的数 \\(a\\) 与 \\(b\\) 的乘积，即 \\(c=ab,(a,b)=1\\) ，易证
+\\[\sigma( c)=\sigma(ab)=\sigma(a)\cdot \sigma(b)\\]
+将 \\(a\\) 与 \\(b\\) 进行质因数分解，则有
+\\[\sigma( c)=\sigma(p\_1^{e1})\sigma(p\_2^{e\_2})\cdots \sigma(p\_a^{e\_a})=\prod\_1^a\frac{p\_i^{e\_i+1}-1}{p\_i-1}\\]
+在上式的计算结果中减去数 \\(c\\) 即为其真因子之和
+
+```C++
+#include <iostream>
+#include <unordered_map>
+#include <cmath>
+
+using namespace std;
+
+int getSumDivisors(int x) {
+    unordered_map<int, int> primes;
+    int a = x;
+    for (int i = 2; i <= a / i; i++) {
+        while (a % i == 0) {
+            a = a / i;
+            primes[i]++;
+        }
+    }
+    if (a > 1) primes[a]++;
+    int res = 1;
+    for (auto p : primes) {
+        res *= (pow(p.first, p.second + 1) - 1) / (p.first - 1);
+    }
+    return res - x;
+}
+
+int main() {
+    int ans = 0;
+    for (int i = 2; i < 10000; i++) {
+        if (getSumDivisors(i) != i && getSumDivisors(getSumDivisors(i)) == i) {
+            ans += i;
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+
+
+## 22. Names Scores {#22-dot-names-scores}
+
+> Using [names.txt](/resource/0022_names.txt), a 46K text file containing over five-thousand first names, begin by sorting it into alphabetical order. Then working out the alphabetical value for each name, multiply this value by its alphabetical position in the list to obtain a name score.<br />
+> For example, when the list is sorted into alphabetical order, COLIN, which is worth \\(3+15+12+9+14=53\\), is the \\(938\\)th name in the list. So, COLIN would obtain a score of \\(938\times 53=49714\\).<br />
+> What is the total of all the name scores in the file?
+
+```C++
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    ifstream ifs("names.txt", ios::in);
+    vector<string> list;
+    string tmp;
+    while (getline(ifs, tmp, ',')) {
+        list.push_back(tmp.substr(1, tmp.size() - 2));
+    }
+    sort(list.begin(), list.end());
+    int ans = 0;
+    for (int i = 0; i < list.size(); i++) {
+        int suma = 0;
+        for (int j = 0; j < list[i].size(); j++) {
+            suma += list[i][j] - 'A' + 1;
+        }
+        ans += suma * (i + 1);
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+
+
+## 23. Non-abundant sums {#23-dot-non-abundant-sums}
+
+> A perfect number is a number for which the sum of its proper divisors is exactly equal to the number. For example, the sum of the proper divisors of \\(28\\) would be \\(1+2+4+7+14=28\\), which means that \\(28\\) is a perfect number.<br />
+> A number \\(n\\) is called deficient if the sum of its proper divisors is less than \\(n\\) and it is called abundant if this sum exceeds \\(n\\).<br />
+> As \\(12\\) is the smallest abundant number, \\(1+2+3+4+6=16\\), the smallest number that can be written as the sum of two abundant numbers is \\(24\\). By mathematical analysis, it can be shown that all integers greater than \\(28123\\) can be written as the sum of two abundant numbers. However, this upper limit cannot be reduced any further by analysis even though it is known that the greatest number that cannot be expressed as the sum of two abundant numbers is less than this limit.<br />
+> Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
+
+```C++
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+
+using namespace std;
+
+int sumOfDivisors(int n) {
+    int res = 0;
+    for (int i = 1; i * i <= n; i++) {
+        if (n % i == 0) {
+            res += i;
+            if (i != n / i) {
+                res += n / i;
+            }
+        }
+    }
+    return res - n;
+}
+
+int main() {
+    int limit = 28123;
+    int ans = 0;
+    unordered_set<int> abn;
+    for (int i = 1; i <= limit; i++) {
+        if (sumOfDivisors(i) > i) {
+            abn.insert(i);
+        }
+        bool flag = true;
+        for (auto it : abn) {
+            if (abn.find(i - it) != abn.end()) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            ans += i;
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
