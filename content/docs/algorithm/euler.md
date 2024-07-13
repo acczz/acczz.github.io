@@ -1221,3 +1221,369 @@ int main() {
     return 0;
 }
 ```
+
+
+## 25. 1000-digit Fibonacci Number {#25-dot-1000-digit-fibonacci-number}
+
+> The Fibonacci sequence is defined by the recurrence relation:<br />
+> \\(F\_n=F\_{n-1}+F\_{n-2}\\) where \\(F\_1=1\\) and \\(F\_2=1\\).<br />
+> Hence the first 12 terms will be:
+> \\[\begin{aligned}
+> F\_1&=1\\\\
+> F\_2&=1\\\\
+> F\_3&=2\\\\
+> F\_4&=3\\\\
+> F\_5&=5\\\\
+> F\_6&=8\\\\
+> F\_7&=13\\\\
+> F\_8&=21\\\\
+> F\_9&=34\\\\
+> F\_{10}&=55\\\\
+> F\_{11}&=89\\\\
+> F\_{12}&=144
+> \end{aligned}\\]
+> The 12th term, \\(F\_{12}\\) is the first term to contain three digits.<br />
+> What is the index of the first term in the Fibonacci sequence to contain 1000 digits?
+
+```C++
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+string addTwoString(const string a, const string b) {
+    std::string ans;
+    int n = a.size() - 1, m = b.size() - 1;
+    int carry = 0;
+    while (n >= 0 && m >= 0) {
+        int t = a[n] - '0' + b[m] - '0' + carry;
+        ans.push_back(t % 10 + '0');
+        carry = t / 10;
+        n--, m--;
+    }
+    while (n >= 0) {
+        int t = a[n] - '0' + carry;
+        ans.push_back(t % 10 + '0');
+        carry = t / 10;
+        n--;
+    }
+    while (m >= 0) {
+       int t = b[m] - '0' + carry;
+        ans.push_back(t % 10 + '0');
+        carry = t / 10;
+        m--;
+    }
+    if (carry) {
+        ans.push_back(carry + '0');
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+int main() {
+    string a = "1", b = "1";
+    string res;
+    int idx = 3;
+    while (true) {
+        res = addTwoString(a, b);
+        if (res.size() >= 1000) {
+            break;
+        }
+        a = b;
+        b = res;
+        idx++;
+    }
+    cout << idx << endl;
+    return 0;
+}
+```
+
+
+## 26. Reciprocal Cycles {#26-dot-reciprocal-cycles}
+
+> A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
+> \\[\begin{aligned}
+> 1/2&=0.5\\\\
+> 1/3&=0.(3)\\\\
+> 1/4&=0.25\\\\
+> 1/5&=0.2\\\\
+> 1/6&=0.1(6)\\\\
+> 1/7&=0.(142857)\\\\
+> 1/8&=0.125\\\\
+> 1/9&=0.(1)\\\\
+> 1/10&=0.1
+> \end{aligned}\\]
+> where \\(0.1(6)\\) means \\(0.166666\dots\\), and has a \\(1\\)-digit recurring cycle. It can be seen that \\(1/7\\) has a \\(6\\)-digit recurring cycle.<br />
+> Find the value of \\(d<1000\\) for which \\(1/d\\) contains the longest recurring cycle in its decimal fraction part.
+
+```C++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// 模拟竖式除法计算循环节的长度
+int getLen(int x) {
+    int a = 1, t = 1;
+    vector<int> pos(1000);
+    pos[a] = t;
+    while (a) {
+        t += 1;
+        a = (a * 10) % x;
+        if (pos[a])
+            return t - pos[a];
+        pos[a] = t;
+    }
+    return 0;
+}
+
+int main() {
+    int n = 1000;
+    int ans = 0, len = 0;
+    for (int i = 2; i < n; i++) {
+        if (getLen(i) > len) {
+            ans = i;
+            len = getLen(i);
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+
+
+## 27. Quadratic Primes {#27-dot-quadratic-primes}
+
+> Euler discovered the remarkable quadratic formula:
+> \\[n^2+n+41\\]
+> It turns out that the formula will produce \\(40\\) primes for the consecutive integer values \\(0\leq n \leq 39\\). However, when \\(n=40, 40^2+40+41=40(40+1)+41\\) is divisible by \\(41\\), and certainly when \\(n=41,41^2+41+41\\) is clearly divisible by \\(41\\).<br />
+> The incredible formula \\(n^2-79n+1601\\) was discovered, which produces \\(80\\) primes for the consecutive values \\(0\leq n \leq 79\\). The product of the coefficients, \\(-79\\) and \\(1601\\), is \\(-126470\\).<br />
+> Considering quadratics of the form:<br />
+> \\(n^2+an+b\\), where \\(|a|<1000\\) and \\(|b| \leq 1000\\)<br />
+> where \\(|n|\\) is the modulus/absolute value of \\(n\\)<br />
+> e.g. \\(|11|=11\\) and \\(|-4|=4\\)<br />
+> Find the product of the coefficients, \\(a\\) and \\(b\\), for the quadratic expression that produces the maximum number of primes for consecutive values of \\(n\\), starting with \\(n=0\\).
+
+首先，可以分析一下系数 \\(a\\) 与 \\(b\\) 需要满足的性质。假设 \\(n=0\\)，\\(f(0)=0^2+0+b=b\\) 必须是一个素数，也就是说 \\(b\\) 必须是一个素数；假设 \\(n=1\\)，则 \\(f(1)=1+a+b\\) 必须是一个素数，我们已经知道 \\(b\\) 必须是一个素数，又因为除2以外所有素数都是奇数，则在 \\(b\neq 2\\) 时，则 \\(a\\) 必须是一个奇数。如果 \\(b=2\\)，取 \\(n=2\\)，则 \\(f(2)=2^2+2a+2=2(a+3)\\) 为偶数则必不为素数，则 \\(n\\) 的取值只能是 \\(0\\) 和 \\(1\\)，此公式最多只能产生两个素数，肯定不是产生素数最多的公式，所以可以把 \\(b=2\\) 的情况排除。综上所述，\\(b\\) 为除二以外的素数，\\(a\\) 为奇数，这样我们大幅度缩小筛选系数的范围<br />
+
+```C++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+const int N = 2001000;
+vector<int> primes;
+vector<bool> st(N + 1, false);
+
+void init() {
+    for (int i = 2; i <= N; i++) {
+        if (!st[i]) {
+            primes.push_back(i);
+        }
+        for (int j = 0; primes[j] * i <= N; j++) {
+            st[primes[j] * i] = true;
+            if (i % primes[j] == 0)
+                break;
+        }
+    }
+}
+
+int getCount(int a, int b) {
+    int cnt = 0;
+    while (true) {
+        auto tmp = cnt * cnt + a * cnt + b;
+        if (tmp < 0 || st[tmp]) {
+            return cnt;
+        }
+        cnt++;
+    }
+    return 0;
+}
+
+int main() {
+    init();
+    int ans, nums = 0;
+    for (int i = -999; i < 1000; i += 2) {
+        for (int j = 0; primes[j] <= 1000; j++) {
+            int c = getCount(i, primes[j]);
+            if (c > nums) {
+                nums = c;
+                ans = i * primes[j];
+            }
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+
+
+## 28. Number Spiral Diagonals {#28-dot-number-spiral-diagonals}
+
+> Starting with the number \\(1\\) and moving to the right in a clockwise direction a \\(5\\) by \\(5\\) spiral is formed as follows:
+> \\[\begin{aligned}
+> {\color{red}21}&&22&&23&&24&&{\color{red}25}&&\\\\
+> 20&&{\color{red}7}&&8&&{\color{red}9}&&10&&\\\\
+> 19&&6&&{\color{red}1}&&2&&11\\\\
+> 18&&{\color{red}5}&&4&&{\color{red}3}&&12&&\\\\
+> {\color{red}17}&&16&&15&&14&&{\color{red}13}&&\\\\
+> \end{aligned}\\]
+> It can be verified that the sum of the numbers on the diagonals is \\(101\\). What is the sum of the numbers on the diagonals in a \\(1001\\) by \\(1001\\) spiral formed in the same way?
+
+```C++
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n = 1001, t = 2;
+    vector<int> nums = {1};
+    for (int i = 0; i < n / 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            int idx = max<int>(0, nums.size() - 4);
+            nums.push_back(nums[idx] + t);
+            t += 2;
+        }
+    }
+    cout << accumulate(nums.begin(), nums.end(), 0) << endl;
+    return 0;
+}
+```
+
+
+## 29. Distinct Powers {#29-dot-distinct-powers}
+
+> Consider all integer combinations of \\(a^b\\) for \\(2\leq a\leq 5\\) and \\(2\leq b\leq5\\) :
+> \\[\begin{aligned}
+> 2^2&=4,&\quad2^3&=8,&\quad2^4&=16,&\quad2^5&=32\\\\
+> 3^2&=9,&\quad3^3&=27,&\quad3^4&=81,&\quad3^5&=243\\\\
+> 4^2&=16,&\quad4^3&=64,&\quad4^4&=256,&\quad4^5&=1024\\\\
+> 5^2&=25,&\quad5^3&=125,&\quad5^4&=625,&\quad5^5&=3125
+> \end{aligned}\\]
+> If they are then placed in numerical order, with any repeats removed, we get the following sequence of \\(15\\) distinct terms:
+> \\[4,8,9,16,25,27,32,64,81,125,243,256,625,1024,3125.\\]
+> How many distinct terms are in the sequence generated by \\(a^b\\) for \\(2\leq a\leq 100\\) and \\(2\leq b\leq100\\) ?
+
+```C++
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <unordered_set>
+
+using namespace std;
+
+string multiply(string a, string b) {
+    string ans;
+    int n = a.size(), m = b.size();
+    vector<int> tmp(n + m);
+    for (int i = n - 1; i >= 0; i--) {
+        for (int j = m - 1; j >= 0; j--) {
+            tmp[i + j + 1] += (a[i] - '0') * (b[j] - '0');
+        }
+    }
+    for (int i = n + m - 1; i >= 1; i--) {
+        ans += tmp[i] % 10 + '0';
+        tmp[i - 1] += tmp[i] / 10;
+    }
+    ans += tmp[0] == 0 ? "" : to_string(tmp[0]);
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+int main() {
+    unordered_set<string> s;
+    for (int a = 2; a <= 100; a++) {
+        string tmp = to_string(a);
+        for (int b = 2; b <= 100; b++) {
+            tmp = multiply(tmp, to_string(a));
+            s.insert(tmp);
+        }
+    }
+    cout << s.size() << endl;
+    return 0;
+}
+```
+
+
+## 30. Digit Fifth Powers {#30-dot-digit-fifth-powers}
+
+> Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:
+> \\[1634=1^4+6^4+3^4+4^4\\\\
+> 8208=8^4+2^4+0^4+8^4\\\\
+> 9474=9^4+4^4+7^4+4^4\\]
+> As \\(1=1^4\\) is not a sum it is not included.<br />
+> The sum of these numbers is \\(1634+8208+9474=19316\\).<br />
+> Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
+
+假设满足题目要求的数 \\(n\\) 有 \\(d\\) 位数字，易知 \\(10^{d-1}<n<10^d\\) 。同时考虑到符合条件的数等于其各位数的五次方之和，而对于 \\(d\\) 位数其各位数五次方之和最大为 \\(d\cdot 9^5\\) ，即 \\(n<d\cdot 9^5\\) 。综合以上两个条件，易知 \\(10^{d-1}<d\cdot 9^5\\) ，对不等式两边求对数得：
+\\[d-1<log(d)+5log(9)\Rightarrow d-log(d)<5log(9)+1\\]
+求解此不等式，得到 \\(d<6.59\\) ，由于 \\(d\\) 必为整数，则 \\(d\\) 最大的取值为6，则根据以上的推导，满足条件的数 \\(n<6\times 9^5=354294\\) ，从而可以确定所求数的上界
+
+```C++
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <unordered_map>
+#include <numeric>
+
+using namespace std;
+
+int main() {
+    unordered_map<int, int> mp;
+    vector<int> ans;
+    for (int i = 1; i < 10; i++) {
+        mp[i] = pow(i, 5);
+    }
+    for (int i = 10; i < 354294; i++) {
+        int x = i, t = 0;
+        while (x) {
+            t += mp[x % 10];
+            x /= 10;
+        }
+        if (t == i) {
+            ans.push_back(i);
+        }
+    }
+    cout << accumulate(ans.begin(), ans.end(), 0) << endl;
+    return 0;
+}
+```
+
+
+## 31. Coin Sums {#31-dot-coin-sums}
+
+> In the United Kingdom the currency is made up of pound (£) and pence (p). There are eight coins in general circulation:<br />
+> 1p, 2p, 5p, 10p, 20p, 50p, £1 (100p), and £2 (200p).<br />
+> It is possible to make £2 in the following way:<br />
+> 1×£1 + 1×50p + 2×20p + 1×5p + 1×2p + 3×1p<br />
+> How many different ways can £2 be made using any number of coins?
+
+```C++
+#include <functional>
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> coins{1, 2, 5, 10, 20, 50, 100, 200};
+    std::function<int(std::vector<int>, int)> f = [&f](std::vector<int> coins,
+                                                     int n) {
+        if (n == 0) return 1;
+        if (coins.empty()) return 0;
+        auto t = coins.back();
+        coins.pop_back();
+        int res = 0;
+        while (n >= 0) {
+            res += f(coins, n);
+            n -= t;
+        }
+        return res;
+    };
+    std::cout << f(coins, 200) << std::endl;
+}
+```
