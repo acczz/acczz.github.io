@@ -1587,3 +1587,65 @@ int main() {
     std::cout << f(coins, 200) << std::endl;
 }
 ```
+
+```C++
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> coins{1, 2, 5, 10, 20, 50, 100, 200};
+    std::vector<std::vector<int>> dp(9, std::vector<int>(201, 0));
+    dp[1] = std::vector<int>(201, 1);
+    for (int i = 1; i <= 8; i++) {
+        dp[i][0] = 1;
+    }
+    for (int i = 2; i <= 8; i++) {
+        for (int j = 1; j <= 200; j++) {
+            for (int k = 0; k * coins[i - 1] <= j; k++) {
+                dp[i][j] += dp[i - 1][j - k * coins[i - 1]];
+            }
+        }
+    }
+    std::cout << dp[8][200] << std::endl;
+}
+```
+
+
+## 32. Pandigital Products {#32-dot-pandigital-products}
+
+> We shall say that an \\(n\\)-digit number is pandigital if it makes use of all the digits \\(1\\) to \\(n\\) exactly once; for example, the 5-digit number, \\(15234\\), is \\(1\\) through \\(5\\) pandigital.<br />
+> The product \\(7254\\) is unusual, as the identity, \\(39\times 186=7254\\), containing multiplicand, multiplier, and product is \\(1\\) through \\(9\\) pandigital.<br />
+> Find the sum of all products whose multiplicand/multiplier/product identity can be written as a \\(1\\) through \\(9\\) pandigital.<br />
+> HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
+
+```C++
+#include <algorithm>
+#include <iostream>
+#include <numeric>
+#include <unordered_set>
+
+int main() {
+    std::unordered_set<int> ans;
+    auto check = [](std::string str) {
+        std::sort(str.begin(), str.end());
+        return str == "123456789";
+    };
+    for (int i = 2; i <= 9; i++) {
+        for (int j = 1234; j <= 9876; j++) {
+            if (check(std::to_string(i) + std::to_string(j) +
+                      std::to_string(i * j))) {
+                ans.insert(i * j);
+            }
+        }
+    }
+    for (int i = 12; i <= 98; i++) {
+        for (int j = 123; j <= 987; j++) {
+            if (check(std::to_string(i) + std::to_string(j) +
+                      std::to_string(i * j))) {
+                ans.insert(i * j);
+            }
+        }
+    }
+    std::cout << std::accumulate(ans.begin(), ans.end(), 0) << std::endl;
+}
+```
