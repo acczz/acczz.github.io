@@ -1649,3 +1649,43 @@ int main() {
     std::cout << std::accumulate(ans.begin(), ans.end(), 0) << std::endl;
 }
 ```
+
+
+## 33. Digit Cancelling Fractions {#33-dot-digit-cancelling-fractions}
+
+> The fraction \\(49/98\\) is a curious fraction, as an inexperienced mathematician in attempting to simplify it may incorrectly believe that \\(49/98=4/8\\), which is correct, is obtained by cancelling the \\(9\\)s.<br />
+> We shall consider fractions like, \\(30/50=3/5\\), to be trivial examples.<br />
+> There are exactly four non-trivial examples of this type of fraction, less than one in value, and containing two digits in the numerator and denominator.<br />
+> If the product of these four fractions is given in its lowest common terms, find the value of the denominator.
+
+1.  \\(\frac{10a+b}{10a+c}=\frac{b}{c}\Rightarrow 10ac+bc=10ab+bc \Rightarrow b=c\text{ or }a=0(排除) \Rightarrow \frac{10a+b}{10a+c}=1\\) 不符合题意
+2.  \\(\frac{10a+b}{10c+b}=\frac{a}{c}\Rightarrow 10ac+bc=10ac+ab \Rightarrow b=0(排除)\text{ or }a=c \Rightarrow \frac{10a+b}{10c+b}=1\\) 不符合题意
+3.  \\(\frac{10a+b}{10b+c}=\frac{a}{c}\Rightarrow 10ac+bc=10ab+ac\\)
+4.  \\(\frac{10a+b}{10c+a}=\frac{b}{c}\Rightarrow 10ac+bc=10bc+ab\\)
+
+<!--listend-->
+
+```C++
+#include <iostream>
+
+int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
+
+int main() {
+    std::pair<int, int> ans{1, 1};
+    for (int a = 1; a <= 9; a++) {
+        for (int b = 1; b <= 9; b++) {
+            for (int c = 1; c <= 9; c++) {
+                if (a / c < 1 && (9 * a * c + b * c == 10 * a * b)) {
+                    ans.first *= a;
+                    ans.second *= c;
+                } else if (b / c < 1 && (10 * a * c == 9 * b * c + a * b)) {
+                    ans.first *= b;
+                    ans.second *= c;
+                }
+            }
+        }
+    }
+    int t = gcd(ans.first, ans.second);
+    std::cout << ans.second / t << std::endl;
+}
+```
