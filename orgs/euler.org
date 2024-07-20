@@ -63,7 +63,7 @@ What is the largest prime factor of the number 600851475143?
   int main() {
       long long n = 600851475143;
       int i = 2;
-      while (i * i < n) {
+      while (i * i <= n) {
 	  while (n % i == 0) {
 	      n /= i;
 	  }
@@ -1710,3 +1710,256 @@ If the product of these four fractions is given in its lowest common terms, find
 
 #+RESULTS:
 : 100
+
+** 34. Digit Factorials
+#+begin_quote
+\(145\) is a curious number, as \(1!+4!+5!=1+24+120=145\).\\
+Find the sum of all numbers which are equal to the sum of the factorial of their digits.\\
+Note: As \(1!=1\) and \(2!=2\) are not sums they are not included.
+#+end_quote
+\(7\times9!=2540160\)
+#+begin_src C++
+  #include <iostream>
+
+  int fact(int x) {
+      if (x == 0) return 1;
+      return x * fact(x - 1);
+  }
+
+  int main() {
+      int ans = 0;
+      for (int i = 3; i < 2540160; i++) {
+	  int t = i, a = 0;
+	  while (t) {
+	      a += fact(t % 10);
+	      t = t / 10;
+	  }
+	  if (a == i) {
+	      ans += i;
+	  }
+      }
+      std::cout << ans << std::endl;
+  }
+#+end_src
+
+#+RESULTS:
+: 40730
+
+** 35. Circular Primes
+#+begin_quote
+The number, \(197\), is called a circular prime because all rotations of the digits: \(197\), \(971\) and \(719\), are themselves prime.\\
+There are thirteen such primes below \(100\): \(2,3,5,7,11,13,17,31,37,71,73,79\) and \(97\).\\
+How many circular primes are there below one million?
+#+end_quote
+#+begin_src C++
+  #include <algorithm>
+  #include <iostream>
+  #include <string>
+  #include <unordered_set>
+  #include <vector>
+
+  int main() {
+      const int N = 1000010;
+      std::vector<int> st(N, 0);
+      std::vector<int> primes;
+      for (int i = 2; i < 1000000; i++) {
+	  if (!st[i]) {
+	      primes.push_back(i);
+	  }
+	  for (int j = 0; i * primes[j] < 1000000; j++) {
+	      st[i * primes[j]] = 1;
+	      if (i % primes[j] == 0) break;
+	  }
+      }
+      int ans = 0;
+      std::unordered_set<std::string> primesStr;
+      for (const auto prime : primes) {
+	  primesStr.insert(std::to_string(prime));
+      }
+      for (const auto &str : primesStr) {
+	  std::string o = str;
+	  bool flag = true;
+	  do {
+	      auto t = o.back();
+	      o.pop_back();
+	      o = t + o;
+	      if (primesStr.find(o) == primesStr.end()) {
+		  flag = false;
+		  break;
+	      }
+	  } while (o != str);
+	  ans += (int)flag;
+      }
+      std::cout << ans << std::endl;
+  }
+#+end_src
+
+#+RESULTS:
+: 55
+
+** 36. Double-base Palindromes
+#+begin_quote
+The decimal number, \(585=1001001001_2\) (binary), is palindromic in both bases.\\
+Find the sum of all numbers, less than one million, which are palindromic in base \(10\) and base \(2\).\\
+(Please note that the palindromic number, in either base, may not include leading zeros.)
+#+end_quote
+#+begin_src C++
+  #include <iostream>
+  #include <string>
+
+  int main() {
+      auto check = [](const std::string &s) {
+	  auto len = s.size();
+	  for (int i = 0; i < len / 2; i++) {
+	      if (s[i] != s[len - i - 1]) {
+		  return false;
+	      }
+	  }
+	  return true;
+      };
+      auto to_binary = [](int x) -> std::string {
+	  if (x == 0) return "0";
+	  std::string s;
+	  while (x) {
+	      s = s + std::to_string(x % 2);
+	      x = x / 2;
+	  }
+	  return s;
+      };
+      int ans = 0;
+      for (int i = 0; i < 1000000; i++) {
+	  if (check(std::to_string(i)) && check(to_binary(i))) {
+	      ans += i;
+	  }
+      }
+      std::cout << ans << std::endl;
+      return 0;
+  }
+#+end_src
+
+#+RESULTS:
+: 872187
+
+** 37. Truncatable Primes
+#+begin_quote
+The number \(3797\) has an interesting property. Being prime itself, it is possible to continuously remove digits from left to right, and remain prime at each stage: \(3797\), \(797\), \(97\), and \(7\). Similarly we can work from right to left: \(3797\), \(379\), \(37\), and \(3\).\\
+Find the sum of the only eleven primes that are both truncatable from left to right and right to left.\\
+NOTE: \(2\), \(3\), \(5\), and \(7\) are not considered to be truncatable primes.
+#+end_quote
+#+begin_src C++
+  #include <iostream>
+  #include <string>
+  #include <vector>
+
+  int main() {
+      const int N = 100000000;
+      std::vector<int> st(N, 0);
+      std::vector<int> primes;
+      st[0] = st[1] = 1;
+      for (int i = 2; i < N; i++) {
+	  if (!st[i]) {
+	      primes.push_back(i);
+	  }
+	  for (int j = 0; i * primes[j] < N; j++) {
+	      st[i * primes[j]] = 1;
+	      if (i % primes[j] == 0) break;
+	  }
+      }
+      int cnt = 0, ans = 0;
+      for (const auto a : primes) {
+	  if (a < 10) continue;
+	  if (cnt == 11) break;
+	  auto s = std::to_string(a);
+	  bool flag = true;
+	  for (int i = 1; i < s.size(); i++) {
+	      int x = std::stoi(s.substr(0, i));
+	      int y = std::stoi(s.substr(i, s.size() - i));
+	      if (st[x] || st[y]) {
+		  flag = false;
+		  break;
+	      }
+	  }
+	  if (flag) {
+	      cnt++;
+	      ans += a;
+	  }
+      }
+      std::cout << ans << std::endl;
+  }
+#+end_src
+
+#+RESULTS:
+: 748317
+
+** 38. Pandigital Multiples
+#+begin_quote
+Take the number \(192\) and multiply it by each of \(1\), \(2\) and \(3\):
+\[192\times1=192\\192\times2=384\\192\times3=576\]
+By concatenating each product we get the \(1\) to \(9\) pandigital, \(192384576\). We will call \(192384576\) the concatenated product of \(192\) and \((1,2,3)\).\\
+The same can be achieved by starting with \(9\) and multiplying by \(1\), \(2\), \(3\), \(4\) and \(5\), giving the pandigital, \(918273645\), which is the concatenated product of \(9\) and \((1,2,3,4,5)\).\\
+What is the largest \(1\) to \(9\) pandigital \(9\)-digit number that can be formed as the concatenated product of an integer with \((1,2,\dots,n)\) where \(n>1\)?
+#+end_quote
+#+begin_src C++
+  #include <iostream>
+  #include <string>
+  #include <algorithm>
+
+  int main() {
+      int ans = 0;
+      for (int i = 1; i < 50000; i++) {
+	  int n = 2;
+	  auto s = std::to_string(i);
+	  while (s.size() < 9) {
+	      s += std::to_string(i * n);
+	      n++;
+	  }
+	  if (s.size() > 9) continue;
+	  auto t = s;
+	  std::sort(t.begin(), t.end());
+	  if (t == "123456789") {
+	      ans = std::max(ans, std::stoi(s));
+	  }
+      }
+      std::cout << ans << std::endl;
+  }
+#+end_src
+
+#+RESULTS:
+: 932718654
+
+** 39. Integer Right Triangles
+#+begin_quote
+If \(p\) is the perimeter of a right angle triangle with integral length sides, \({a,b,c}\), there are exactly three solutions for \(p=120\). \({20,48,52},{24,45,51},{30,40,50}\)\\
+For which value of \(p\leq1000\), is the number of solutions maximised?
+#+end_quote
+#+begin_src C++
+  #include <iostream>
+  #include <vector>
+
+  int gcd(int x, int y) { return y == 0 ? x : gcd(y, x % y); }
+
+  int main() {
+      const int N = 1000;
+      std::vector<int> res(N + 1, 0);
+      for (int m = 1; m * m < N; m += 2) {
+	  for (int n = 1; n < m; n += 2) {
+	      if (gcd(m, n) == 1) {
+		  for (int i = m * (m + n); i <= N; i += m * (m + n)) {
+		      res[i] += 1;
+		  }
+	      }
+	  }
+      }
+      int ans = 0, cnt = 0;
+      for (int i = 1; i < res.size(); i++) {
+	  if (res[i] > cnt) {
+	      cnt = res[i];
+	      ans = i;
+	  }
+      }
+      std::cout << ans << std::endl;
+  }
+#+end_src
+
+#+RESULTS:
+: 840
