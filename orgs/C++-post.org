@@ -1,0 +1,11 @@
+#+hugo_base_dir: ~/notes/
+#+hugo_section: posts
+#+hugo_auto_set_lastmod: t
+#+filetags: @C++
+
+* DONE C++ Virtual Table                  :Assembly__Language:Virtual__Table:
+CLOSED: [2024-07-13 Sat 16:51]
+:PROPERTIES:
+:EXPORT_FILE_NAME: C++ Virtual Table
+:END:
+** Introduction
